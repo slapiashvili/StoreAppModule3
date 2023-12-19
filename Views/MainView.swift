@@ -13,13 +13,13 @@ struct MainView: View {
     @StateObject var cartViewModel = CartViewModel()
     @ObservedObject var categoryViewModel: CategoryViewModel
     @State private var isCartVisible = false
+    @State private var selectedCategory: Category? // Add this line
 
     var body: some View {
         NavigationView {
             VStack {
                 ProductsGridView(products: viewModel.products, viewModel: viewModel, cartViewModel: cartViewModel, categoryViewModel: categoryViewModel)
-
-                .padding()
+                    .padding()
 
                 Button("Show Cart") {
                     isCartVisible.toggle()
@@ -27,6 +27,9 @@ struct MainView: View {
                 .sheet(isPresented: $isCartVisible) {
                     CartView(cartViewModel: cartViewModel)
                 }
+
+                
+
             }
             .navigationTitle("Welcome back!")
             .onAppear {

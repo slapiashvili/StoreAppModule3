@@ -12,15 +12,11 @@ struct CategoriesView: View {
     @ObservedObject var categoryViewModel: CategoryViewModel
 
     var body: some View {
-        VStack {
-            // Display list of categories
+        NavigationView {
             ScrollView(.horizontal, showsIndicators: false) {
                 VStack {
                     ForEach(categoryViewModel.categories) { category in
-                        Button(action: {
-                            categoryViewModel.selectedCategory = category
-                            categoryViewModel.fetchProducts(for: category)
-                        }) {
+                        NavigationLink(destination: CategoryProductListView(categoryViewModel: categoryViewModel, cartViewModel: CartViewModel(), selectedCategory: Binding.constant(category))) {
                             Text(category.name)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 8)
@@ -32,11 +28,11 @@ struct CategoriesView: View {
                 }
                 .padding()
             }
-        }
-        .onAppear {
-            // Fetch categories when the view appears
-            categoryViewModel.fetchCategories()
+            .navigationTitle("Categories")
+            .onAppear {
+                // Fetch categories when the view appears
+                categoryViewModel.fetchCategories()
+            }
         }
     }
 }
-
