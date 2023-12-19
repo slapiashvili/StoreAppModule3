@@ -11,12 +11,13 @@ import SwiftUI
 struct MainView: View {
     @ObservedObject var viewModel: MainViewModel
     @StateObject var cartViewModel = CartViewModel()
+    @ObservedObject var categoryViewModel: CategoryViewModel
     @State private var isCartVisible = false
 
     var body: some View {
         NavigationView {
             VStack {
-                ProductsGridView(products: viewModel.products, viewModel: viewModel, cartViewModel: cartViewModel)
+                ProductsGridView(products: viewModel.products, viewModel: viewModel, cartViewModel: cartViewModel, categoryViewModel: categoryViewModel)
 
                 .padding()
 
@@ -42,6 +43,6 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(viewModel: MainViewModel())
+        MainView(viewModel: MainViewModel(), categoryViewModel: CategoryViewModel())
     }
 }

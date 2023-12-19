@@ -12,6 +12,8 @@ struct ProductsGridView: View {
     let products: [Product]
     @ObservedObject var viewModel: MainViewModel
     @ObservedObject var cartViewModel: CartViewModel
+    @ObservedObject var categoryViewModel: CategoryViewModel
+
 
     var body: some View {
         ScrollView {

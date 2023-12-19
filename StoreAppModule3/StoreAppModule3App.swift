@@ -10,17 +10,19 @@ import SwiftUI
 
 @main
 struct StoreAppModule3App: App {
+    // Create instances of view models here
+    let mainViewModel = MainViewModel()
+    let categoryViewModel = CategoryViewModel()
+
     var body: some Scene {
         WindowGroup {
             TabView {
-                let mainViewModel = MainViewModel()
-
-                ContentView(viewModel: mainViewModel)
+                MainView(viewModel: mainViewModel, categoryViewModel: categoryViewModel)
                     .tabItem {
                         Label("Home", systemImage: "house")
                     }
 
-                CategoriesView()
+                CategoriesView(categoryViewModel: categoryViewModel)
                     .tabItem {
                         Label("Categories", systemImage: "list.bullet")
                     }
@@ -30,5 +32,8 @@ struct StoreAppModule3App: App {
         }
     }
 }
+
+
+
 
 

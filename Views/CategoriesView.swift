@@ -7,35 +7,36 @@
 
 import SwiftUI
 
-import SwiftUI
 
 struct CategoriesView: View {
+    @ObservedObject var categoryViewModel: CategoryViewModel
+
     var body: some View {
-        NavigationView {
-            List {
-                NavigationLink(destination: CategoryDetailView(category: "Category 1")) {
-                    Text("Category 1")
+        VStack {
+            // Display list of categories
+            ScrollView(.horizontal, showsIndicators: false) {
+                VStack {
+                    ForEach(categoryViewModel.categories) { category in
+                        Button(action: {
+                            categoryViewModel.selectedCategory = category
+                            categoryViewModel.fetchProducts(for: category)
+                        }) {
+                            Text(category.name)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(Color.gray)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                        }
+                    }
                 }
-
-                NavigationLink(destination: CategoryDetailView(category: "Category 2")) {
-                    Text("Category 2")
-                }
-
-                NavigationLink(destination: CategoryDetailView(category: "Category 3")) {
-                    Text("Category 3")
-                }
+                .padding()
             }
-            .navigationTitle("Categories")
+        }
+        .onAppear {
+            // Fetch categories when the view appears
+            categoryViewModel.fetchCategories()
         }
     }
 }
 
-struct CategoryDetailView: View {
-    let category: String
-
-    var body: some View {
-        Text("Category: \(category)")
-            .font(.title)
-            .padding()
-    }
-}
